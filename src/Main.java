@@ -3,19 +3,15 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        // Khởi tạo đối tượng StudentManager
         StudentManager manager = new StudentManager();
 
-        // Thêm một số sinh viên mẫu vào hệ thống
         manager.addStudent(new Student("S001", "Alice Johnson", 8.2));
         manager.addStudent(new Student("S002", "Bob Smith", 5.5));
         manager.addStudent(new Student("S003", "Charlie Brown", 9.1));
         manager.addStudent(new Student("S004", "David White", 7.0));
 
-        // Khởi tạo đối tượng Scanner để nhận đầu vào từ người dùng
         Scanner scanner = new Scanner(System.in);
 
-        // Menu hệ thống quản lý sinh viên
         while (true) {
             System.out.println("\nStudent Information Management System");
             System.out.println("1. Add Student");
@@ -37,7 +33,6 @@ public class Main {
                     String name = scanner.nextLine();
                     double marks = 0.0;
                     
-                    // Xử lý nhập điểm số, tránh lỗi InputMismatchException
                     boolean validMarks = false;
                     while (!validMarks) {
                         System.out.print("Enter student marks: ");
