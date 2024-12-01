@@ -28,24 +28,42 @@ public class StudentManager {
     }
 
     private Node delete(Node root, String studentID) {
-        if (root == null) return root;
+        if (root == null) {
+            System.out.println("Error: Student not found.");
+            return root;
+        }
 
+        // If studentID is smaller, search in the left subtree
         if (studentID.compareTo(root.student.getId()) < 0) {
             root.left = delete(root.left, studentID);
-        } else if (studentID.compareTo(root.student.getId()) > 0) {
+        }
+        // If studentID is larger, search in the right subtree
+        else if (studentID.compareTo(root.student.getId()) > 0) {
             root.right = delete(root.right, studentID);
-        } else {
-            if (root.left == null) return root.right;
-            else if (root.right == null) return root.left;
+        }
+        // When studentID is found
+        else {
+            // Case 1: Node with only one child or no child
+            if (root.left == null) {
+                return root.right;
+            }
+            else if (root.right == null) {
+                return root.left;
+            }
 
+            // Case 2: Node with two children, get the inorder successor (smallest in the right subtree)
             root.student = minValueNode(root.right).student;
+
+            // Delete the inorder successor
             root.right = delete(root.right, root.student.getId());
         }
+
         return root;
     }
 
     private Node minValueNode(Node root) {
         Node current = root;
+        // loop down to find the leftmost leaf
         while (current.left != null) {
             current = current.left;
         }
