@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         StudentManager manager = new StudentManager();
 
+        // Adding some predefined students to the system
         manager.addStudent(new Student("S001", "Alice Johnson", 8.2));
         manager.addStudent(new Student("S002", "Bob Smith", 5.5));
         manager.addStudent(new Student("S003", "Charlie Brown", 9.1));
@@ -29,17 +30,26 @@ public class Main {
                     // Add student
                     System.out.print("Enter student ID: ");
                     String id = scanner.nextLine();
+                    
+                    // Check if student ID already exists
+                    Student existingStudent = manager.searchStudent(id);
+                    if (existingStudent != null) {
+                        System.out.println("Error: Student ID already exists. Please enter a unique ID.");
+                        break;
+                    }
+
                     System.out.print("Enter student name: ");
                     String name = scanner.nextLine();
                     double marks = 0.0;
                     
+                    // Handle InputMismatchException for marks
                     boolean validMarks = false;
                     while (!validMarks) {
                         System.out.print("Enter student marks: ");
                         if (scanner.hasNextDouble()) {
                             marks = scanner.nextDouble();
                             scanner.nextLine(); // Consume the newline character
-                            validMarks = true; // Đã nhập đúng kiểu dữ liệu
+                            validMarks = true;
                         } else {
                             System.out.println("Invalid input. Please enter a valid number for marks.");
                             scanner.nextLine(); // Clear the invalid input
@@ -53,8 +63,13 @@ public class Main {
                     // Delete student
                     System.out.print("Enter student ID to delete: ");
                     String deleteId = scanner.nextLine();
-                    manager.deleteStudent(deleteId);
-                    System.out.println("Student deleted successfully!");
+                    Student studentToDelete = manager.searchStudent(deleteId);
+                    if (studentToDelete != null) {
+                        manager.deleteStudent(deleteId);
+                        System.out.println("Student deleted successfully!");
+                    } else {
+                        System.out.println("Error: Student not found.");
+                    }
                     break;
 
                 case 3:
